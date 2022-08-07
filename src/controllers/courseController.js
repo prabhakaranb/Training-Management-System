@@ -39,10 +39,15 @@ const getCourses = async (req) => {
   const limit = Number(req.query.size) || 10;
   const sort = req.query.sort || 'desc';
 
-  const filterQuery = {
-    subjects: 'maths',
-    // type: 'Basic',
-  };
+  const { filterBy, filterValue } = req.query;
+
+  const filterQuery = {};
+  if ((filterBy || '').toLowerCase() === 'subject') {
+    filterQuery.subjects = filterValue;
+  }
+  if ((filterBy || '').toLowerCase() === 'type') {
+    filterQuery.type = filterValue;
+  }
 
   const courses = await Course
     .find(filterQuery)
@@ -74,12 +79,7 @@ const getCourses = async (req) => {
   };
 };
 
-const getCourse = async (req) => {
-
-};
-
 module.exports = {
   addNewCourse,
-  getCourse,
   getCourses,
 };

@@ -41,16 +41,20 @@ const manageUserLogin = async (req, res) => {
         expiresIn: config.jwt.accessTokenExpiresIn,
       },
     );
+
     const refreshToken = jwt.sign(
       {
         username: foundUser.username,
       },
       config.jwt.refreshTokenSecret,
+
       {
         expiresIn: config.jwt.refreshTokenExpiresIn,
       },
     );
-    // Saving refreshToken with current user
+
+    // Saving accessToken with current user
+    foundUser.accessToken = accessToken;
     foundUser.refreshToken = refreshToken;
     const result = await foundUser.save();
 

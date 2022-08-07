@@ -6,6 +6,7 @@ const courseController = require('../controllers/courseController');
 const { USER_ROLES } = require('../lib/constants/userConstants');
 const {
   validateBody,
+  validateQuery,
   verifyAuthToken,
   verifyRoles,
 } = require('../middlewares');
@@ -18,17 +19,10 @@ const {
 
 router.get(
   '/',
+  validateQuery(courseSchema.query),
   verifyAuthToken,
   verifyRoles(USER_ROLES.ADMIN, USER_ROLES.NON_ADMIN),
   (req, res, next) => jsonResponse(req, res, next, courseController.getCourses),
-);
-
-router.get(
-  '/:id',
-  validateBody(courseSchema.body),
-  verifyAuthToken,
-  verifyRoles(USER_ROLES.ADMIN, USER_ROLES.NON_ADMIN),
-  (req, res, next) => jsonResponse(req, res, next, courseController.getCourse),
 );
 
 router.post(

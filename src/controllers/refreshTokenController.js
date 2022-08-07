@@ -28,7 +28,7 @@ const manageRefreshToken = async (req, res) => {
   // evaluate jwt
   jwt.verify(
     refreshToken,
-    config.jwt.REFRESH_TOKEN_SECRET,
+    config.jwt.refreshTokenSecret,
     (err, decoded) => {
       if (err || foundUser.username !== decoded.username) {
         throw new ForbiddenError('User not found.'); // Forbidden

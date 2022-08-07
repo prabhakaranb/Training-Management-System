@@ -7,19 +7,19 @@ const {
 } = require('../lib/common/errors');
 
 const verifyAuthToken = (req, res, next) => {
-  const refreshToken = (req?.headers?.authorization)
+  const acccessToken = (req?.headers?.authorization)
     ? req.headers.authorization.replace('Bearer ', '')
     : undefined;
 
-  if (!refreshToken) {
+  if (!acccessToken) {
     throw new UnauthorizedError('Invalid token.');
   }
 
-  req.refreshToken = refreshToken;
+  req.acccessToken = acccessToken;
 
   // evaluate jwt
   jwt.verify(
-    refreshToken,
+    acccessToken,
     config.jwt.accessTokenSecret,
     (err, decoded) => {
       if (err) {
@@ -33,11 +33,11 @@ const verifyAuthToken = (req, res, next) => {
 };
 
 const verifyUser = (req, res, next) => {
-  const { id, name } = req.params;
+  const { id, username } = req.params;
 
   if (id && id !== req?.payload?.userInfo?.id) {
     throw new ForbiddenError('Not allowed to get this user info.');
-  } else if (name && name !== req?.payload?.userInfo?.name) {
+  } else if (username && username !== req?.payload?.userInfo?.name) {
     throw new ForbiddenError('Not allowed to get this user info.');
   }
 

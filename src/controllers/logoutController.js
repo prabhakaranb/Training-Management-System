@@ -3,17 +3,17 @@ const User = require('../lib/models/userModel');
 const manageLogout = async (req, res) => {
   // On client, also delete the accessToken
 
-  const refreshToken = (req?.headers?.authorization)
+  const accessToken = (req?.headers?.authorization)
     ? req.headers.authorization.replace('Bearer ', '')
     : undefined;
 
-  if (!refreshToken) {
-    return {}; // No conten
+  if (!accessToken) {
+    return {}; // No content
   }
 
-  // Is refreshToken in db?
+  // Is accessToken in db?
   const foundUser = await User.findOne({
-    refreshToken,
+    accessToken,
   }).exec();
 
   if (!foundUser) {
@@ -25,7 +25,7 @@ const manageLogout = async (req, res) => {
     return {};
   }
 
-  // Delete refreshToken in db
+  foundUser.accessToken = '';
   foundUser.refreshToken = '';
   const result = await foundUser.save();
 

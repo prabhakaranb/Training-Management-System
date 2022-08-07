@@ -25,7 +25,7 @@ router.use('/courses', courseRouter);
 
 router.use('/subjects', subjectRouter);
 
-router.use('/stream', streamRouter);
+router.use('/streams', streamRouter);
 
 router.use('/users', userRouter);
 

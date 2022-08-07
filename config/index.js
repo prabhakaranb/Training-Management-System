@@ -4,7 +4,7 @@ const config = {
   service: {
     name: process.env.SERVICE_NAME || 'Programming task',
     env: process.env.NODE_ENV || 'development',
-    port: process.env.PORT || '3000',
+    port: process.env.PORT || 3000,
   },
   mongoDb: {
     uri: process.env.DATABASE_URI,
