@@ -1,11 +1,6 @@
 const Joi = require('joi');
 
 const schema = {
-  params: Joi.object().keys({
-    username: Joi.string()
-      .required()
-      .regex(/^[a-zA-Z0-9]+$/),
-  }).required(),
   body: Joi.object().keys({
     firstName: Joi.string()
       .regex(/^[a-zA-Z ]+$/)

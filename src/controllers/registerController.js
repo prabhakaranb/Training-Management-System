@@ -7,8 +7,10 @@ const {
 } = require('../lib/common/errors');
 const {
   userConstants,
-  BCRYPT_SALT,
 } = require('../lib/constants');
+const {
+  getEncryptedPassword,
+} = require('../lib/helpers');
 
 const manageNewUser = async (req, res, next) => {
   const {
@@ -30,8 +32,7 @@ const manageNewUser = async (req, res, next) => {
   }
 
   try {
-    // encrypt the password
-    const hashedPwd = await bcrypt.hash(password, BCRYPT_SALT);
+    const hashedPwd = await getEncryptedPassword(password);
 
     // create and store the new user
     const result = await User.create({
